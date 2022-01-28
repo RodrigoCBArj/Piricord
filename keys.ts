@@ -1,2 +1,2 @@
-export const BASE_URL = process.env.SUPABASE_URL;
-export const BASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+export const BASE_URL = "https://fuaihiakamngjihsmfaj.supabase.co";
+export const BASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMyNjIzNywiZXhwIjoxOTU4OTAyMjM3fQ.1Ml3S2DVk6su4tdrjGWuQ8GxBsaTuyYV2JOiXDAqQuE";
