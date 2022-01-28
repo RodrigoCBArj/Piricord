@@ -1,10 +1,10 @@
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../keys.ts';
+import { BASE_URL, BASE_ANON_KEY } from '../keys.ts';
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import { createClient } from '@supabase/supabase-js'
 import appConfig from '../config.json';
 import React from 'react';
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabase = createClient(BASE_URL, BASE_ANON_KEY);
 
 export default function ChatPage() {
     const [message, setMessage] = React.useState('');
