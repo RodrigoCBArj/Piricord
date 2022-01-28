@@ -1,21 +1,42 @@
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../keys.ts';
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
-import React from 'react';
+import { createClient } from '@supabase/supabase-js'
 import appConfig from '../config.json';
+import React from 'react';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function ChatPage() {
     const [message, setMessage] = React.useState('');
     const [messageList, setMessageList] = React.useState([]);
 
+    React.useEffect(() => {
+        supabase
+            .from('messages')
+            .select('*')
+            .order('id', { ascending: false })
+            .then(({ data }) => {
+                setMessageList(data);
+            });
+    }, []);
+
     function handleNewMessage(newMessage) {
         const message = {
-            id: messageList.length,
+            // id: messageList.length,
             from: 'rodrigocbarj',
             text: newMessage,
         }
-        setMessageList([
-            message,
-            ...messageList,
-        ]);
+
+        supabase
+            .from('messages')
+            .insert([message])
+            .then(({ data }) => {
+                setMessageList([
+                    data[0],
+                    ...messageList,
+                ]);
+            });
+
         setMessage("");
     }
 
@@ -94,7 +115,6 @@ export default function ChatPage() {
                                 borderRadius: '5px',
                                 padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
-                                marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
@@ -129,7 +149,7 @@ function Header() {
 }
 
 function MessageList(props) {
-    console.log('MessageList', props);
+    // console.log('MessageList', props);
     return (
         <Box
             tag="ul"
@@ -148,7 +168,7 @@ function MessageList(props) {
                         key={message.id}
                         tag="li"
                         styleSheet={{
-                            maxWidth: '250px',
+                            maxWidth: '1700px',
                             borderRadius: '5px',
                             padding: '6px',
                             marginBottom: '12px',
