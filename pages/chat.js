@@ -3,10 +3,23 @@ import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import { createClient } from '@supabase/supabase-js'
 import appConfig from '../config.json';
 import React from 'react';
+import { useRouter } from 'next/router';
+import { ButtonSendSticker } from '../src/components/ButtonSendSticker';
 
 const supabase = createClient(BASE_URL, BASE_ANON_KEY);
 
+function listeningMessagesInRealTime(addMessage) {
+    return supabase
+            .from('messages')
+            .on('INSERT', ( response ) => {
+                addMessage(response.new);
+            })
+            .subscribe();
+}
+
 export default function ChatPage() {
+    const routing = useRouter();
+    const logedUser = routing.query.username;
     const [message, setMessage] = React.useState('');
     const [messageList, setMessageList] = React.useState([]);
 
@@ -14,30 +27,38 @@ export default function ChatPage() {
         supabase
             .from('messages')
             .select('*')
-            .order('id', { ascending: false })
+            .order('id', { ascending: false }) // ordenar pelo id de forma descendente
             .then(({ data }) => {
                 setMessageList(data);
             });
+        
+        const subscription = listeningMessagesInRealTime((newMessage) => {
+            setMessageList((currentListValue) => {
+                return [
+                    newMessage,
+                    ...currentListValue,
+                ]
+            });
+        });
+
+        return () => {
+            subscription.unsubscribe();
+        }
     }, []);
 
     function handleNewMessage(newMessage) {
         const message = {
             // id: messageList.length,
-            from: 'rodrigocbarj',
+            from: logedUser,
             text: newMessage,
-        }
+        };
 
         supabase
             .from('messages')
             .insert([message])
-            .then(({ data }) => {
-                setMessageList([
-                    data[0],
-                    ...messageList,
-                ]);
-            });
+            .then(({ data }) => { });
 
-        setMessage("");
+        setMessage('');
     }
 
     return (
@@ -77,14 +98,7 @@ export default function ChatPage() {
                         padding: '16px',
                     }}
                 >
-                    <MessageList messages={messageList}/>
-                    {/* {messageList.map((currentMessage) => {
-                        return (
-                            <li key={currentMessage.id}>
-                                {currentMessage.from}: {currentMessage.text}
-                            </li>
-                        );
-                    })} */}
+                    <MessageList messages={messageList} />
 
                     <Box
                         as="form"
@@ -111,11 +125,17 @@ export default function ChatPage() {
                             styleSheet={{
                                 width: '100%',
                                 border: '0',
+                                marginRight: '10px',
                                 resize: 'none',
                                 borderRadius: '5px',
                                 padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 color: appConfig.theme.colors.neutrals[200],
+                            }}
+                        />
+                        <ButtonSendSticker 
+                            onStickerClick={(sticker) => {
+                                handleNewMessage(`:sticker: ${sticker}`)
                             }}
                         />
                     </Box>
@@ -149,7 +169,6 @@ function Header() {
 }
 
 function MessageList(props) {
-    // console.log('MessageList', props);
     return (
         <Box
             tag="ul"
@@ -206,7 +225,13 @@ function MessageList(props) {
                                 {(new Date().toLocaleDateString())}
                             </Text>
                         </Box>
-                        {message.text}
+                        {message.text.startsWith(':sticker:')
+                            ? (
+                                <Image src={message.text.replace(':sticker:' , '')} />
+                            )
+                            : (
+                                message.text
+                            )}
                     </Text>
                 );
             })}

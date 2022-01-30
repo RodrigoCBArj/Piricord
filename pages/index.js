@@ -33,7 +33,7 @@ function Title(props) {
 
 //   export default HomePage;
 
-export default function PaginaInicial() {
+export default function HomePage() {
     const [username, setUsername] = React.useState('rodrigocbarj');
     const routing = useRouter();
 
@@ -69,7 +69,7 @@ export default function PaginaInicial() {
                             event.preventDefault();
                             console.log('coisaram');
                             // window.location.href = '/chat';
-                            routing.push('/chat');
+                            routing.push(`/chat?username=${username}`);
                         }}
                         styleSheet={{
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
