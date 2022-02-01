@@ -15,8 +15,5 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
-  },
-  "devDependencies": {
-    "babel-plugin-styled-components": "^2.0.2"
   }
 }
