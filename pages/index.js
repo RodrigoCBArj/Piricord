@@ -75,7 +75,7 @@ export default function HomePage() {
                             width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
                         }}
                     >
-                        <Title tag="h2">Boas vindas de volta! :)</Title>
+                        <Title tag="h2">Boas vindas de volta! :D</Title>
                         <Text variant="body3" styleSheet={{ 
                                 marginBottom: '30px',
                                 marginTop: '10px',
