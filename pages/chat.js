@@ -66,7 +66,7 @@ export default function ChatPage() {
             styleSheet={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 backgroundColor: appConfig.theme.colors.primary[500],
-                backgroundImage: `url(i.giphy.com/media/AOSwwqVjNZlDO/giphy.webp)`,
+                backgroundImage: `url(https://i.giphy.com/media/AOSwwqVjNZlDO/giphy.webp)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
             }}
