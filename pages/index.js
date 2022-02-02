@@ -21,18 +21,6 @@ function Title(props) {
     );
 }
 
-// function HomePage() {
-//     return (
-//     <div>
-//         <GlobalStyle />
-//         <Title tag="h2">Boas vindas de volta! :)</Title>
-//         <h2>Discord - Peixinhos Team</h2>
-//     </div>
-//     );
-//   }
-
-//   export default HomePage;
-
 export default function HomePage() {
     const [username, setUsername] = React.useState('rodrigocbarj');
     const routing = useRouter();
@@ -72,28 +60,27 @@ export default function HomePage() {
                         }}
                         styleSheet={{
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                            width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
+                            width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '10px',
                         }}
                     >
-                        <Title tag="h2">Boas vindas de volta! :D</Title>
-                        <Text variant="body3" styleSheet={{ 
-                                marginBottom: '30px',
-                                marginTop: '10px',
-                                color: appConfig.theme.colors.primary[400] 
+                        
+                        <Text variant="body1" styleSheet={{ 
+                            marginBottom: '10px',
+                            color: appConfig.theme.colors.primary[400],
                                 }}>
                             {appConfig.name}
                         </Text>
+                        
+                        <Title tag="h2">{username}, boas vindas de volta! 👩‍💻</Title>
+                            
+                        <Text variant="body3" styleSheet={{ 
+                                marginBottom: '5px',
+                                marginTop: '30px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}>
+                            Insira seu usuário do GitHub
+                        </Text>
 
-                        {/* <input 
-                            type="text" 
-                            value={username}
-                            onChange={function(event) {
-                                // Valor inputado:
-                                const value = event.target.value;
-                                // Trocar o valor (pelo React) em:
-                                setUsername(value);
-                            }}
-                        /> */}
                         <TextField
                             value={username}
                             onChange={function(event) {

@@ -29,7 +29,7 @@ export function ButtonSendSticker(props) {
             filter: 'grayscale(0)',
           }
         }}
-        label="😋"
+        label="✨"
         onClick={() => setOpenState(!isOpen)}
       />
       {isOpen && (
@@ -69,6 +69,7 @@ export function ButtonSendSticker(props) {
               flex: 1,
               paddingTop: '16px',
               overflow: 'scroll',
+              overflowX: 'hidden',
             }}
           >
             {appConfig.stickers.map((sticker) => (

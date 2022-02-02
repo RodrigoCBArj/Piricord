@@ -23,6 +23,15 @@ function GlobalStyle() {
           flex: 1;
         }
         /* ./App fit Height */ 
+
+        ::-webkit-scrollbar {
+        width: 3px;
+        background-color: #212931;
+        }
+
+        ::-webkit-scrollbar-thumb {
+        background: #207227;
+        }
       `}</style>
     );
 }

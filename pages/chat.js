@@ -173,12 +173,12 @@ function MessageList(props) {
         <Box
             tag="ul"
             styleSheet={{
-                overflow: 'auto',
+                overflowX: 'hidden',
                 display: 'flex',
                 flexDirection: 'column-reverse',
                 flex: 1,
                 color: appConfig.theme.colors.neutrals["000"],
-                marginBottom: '16px',
+                marginBottom: '10px',
             }}
         >
             {props.messages.map((message) => {
@@ -191,6 +191,7 @@ function MessageList(props) {
                             borderRadius: '5px',
                             padding: '6px',
                             marginBottom: '12px',
+                            marginRight: '10px',
                             hover: {
                                 backgroundColor: appConfig.theme.colors.neutrals[700],
                             }
@@ -227,7 +228,9 @@ function MessageList(props) {
                         </Box>
                         {message.text.startsWith(':sticker:')
                             ? (
-                                <Image src={message.text.replace(':sticker:' , '')} />
+                                <Image 
+                                    styleSheet={{ borderRadius: '5px', maxWidth: '230px' }} 
+                                    src={message.text.replace(':sticker:' , '')} />
                             )
                             : (
                                 message.text
